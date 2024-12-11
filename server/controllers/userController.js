@@ -8,7 +8,7 @@ cloudinary.config({
     api_secret: 'acUg7epEOn0aFSl-57xk5FEut_I'
 })
 
-
+//MENGAMBIL DATA SEMUA USER
 const getUsers = async (req, res) => {
     try {
         const users = await User.find({}).select('-password -createdAt -updatedAt -__v').sort({createdAt: -1}).lean()
@@ -25,7 +25,8 @@ const getUsers = async (req, res) => {
     }
 }
 
-const getUser = async (req, res) => {
+//MENGAMBIL DATA USER DETAIL
+const getUserDetails = async (req, res) => {
     try {
         const user = await User.findOne({_id: req.params.userId}).select('-password -__v -updatedAt -createdAt').populate('wishlist').lean()
         res.status(200).json({
@@ -41,9 +42,28 @@ const getUser = async (req, res) => {
     }
 }
 
+
+//MENGAMBIL DATA USER INFO SPESIFIK
+const getUserInfo = async (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.params.userId}).select('-password -__v -updatedAt -createdAt -wishlist -orders_history').lean()
+        res.status(200).json({
+            message: 'Success get user info',
+            data: user,
+            ok: true
+        })
+    } catch (error) {
+        res.status(400).json({
+            message: 'Failed get user info',
+            ok: false
+        })
+    }
+}
+
+//MENGAMBIL DATA USER WISHLIST
 const  getWishlist = async (req, res) => {
     try {
-        const user = await User.findOne({_id: req.params.userId}).select('-password -__v -updatedAt -createdAt -username -email -orders_history -personal_information').populate('wishlist').lean()
+        const user = await User.findOne({_id: req.params.userId}).select('-password -__v -updatedAt -createdAt -username -email -orders_history').populate('wishlist').lean()
         const wishlist = user?.wishlist
         res.status(200).json({
             message: 'Success get wishlist',
@@ -58,6 +78,7 @@ const  getWishlist = async (req, res) => {
     }
 }
 
+//MENANGANI WISHLIST PADA USER SEPERTI ADD/DELETE/CLEAR
 const handleWishlist = async (req, res) => {
     const checkExistItem = await User.findOne({_id: req.params.userId, wishlist: req.body.productId})
     try {
@@ -94,6 +115,7 @@ const handleWishlist = async (req, res) => {
     }
 }
 
+//MENANGANI UPDATE PHOTO PROFILE USER
 const changePhoto = async (req, res) => {
     const { oldPhotoId, photoUrl, photoId } = req.body
     try {
@@ -118,6 +140,7 @@ const changePhoto = async (req, res) => {
     }
 }
 
+//UPDATE DATA USER
 const updateUser = async (req, res) => {
     try {
         await User.updateOne({_id: req.params.userId}, {...req.body})
@@ -131,6 +154,7 @@ const updateUser = async (req, res) => {
     }
 }
 
+//MENGHAPUS DATA USER
 const deleteUser = async (req, res) => {
     const checkExistUser = await User.findOne({_id: req.params.userId})
     try {
@@ -153,6 +177,7 @@ const deleteUser = async (req, res) => {
     }
 }
 
+//MENGUBAH PASSWORD USER
 const changePassword = async (req, res) => {
     const user = await User.findOne({_id: req.params.userId})
     try {
@@ -168,7 +193,7 @@ const changePassword = async (req, res) => {
                 ok: true
             })
         } else {
-            throw new Error('❌ Wrong password!')
+            throw new Error('Password Incorrect!')
         }
     } catch (error) {
         res.status(400).json({
@@ -178,10 +203,11 @@ const changePassword = async (req, res) => {
     }
 }
 
+//MENGAMBIL DATA USER ORDERS HISTORY
 const getOrdersHistory = async (req, res) => {
     const { userId } = req.params
     try {
-        const user = await User.findOne({_id: userId}).select('-password -__v -updatedAt -createdAt -username -email -wishlist -personal_information').populate('orders_history').lean()
+        const user = await User.findOne({_id: userId}).select('-password -__v -updatedAt -createdAt -username -email -wishlist').populate('orders_history').lean()
         const orders_history = user?.orders_history
         res.status(200).json({
             message: 'Success get orders history',
@@ -199,7 +225,8 @@ const getOrdersHistory = async (req, res) => {
 
 module.exports = {
     getUsers,
-    getUser,
+    getUserDetails,
+    getUserInfo,
     getWishlist,
     handleWishlist,
     changePhoto,

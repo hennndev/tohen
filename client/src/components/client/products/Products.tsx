@@ -16,19 +16,15 @@ const Products = ({products, isWishlist}: PropsTypes) => {
     const dispatch = useDispatch()
     const cart = useSelector(getCart)
     
-    const dataDecoded = useDecodeToken() as DataDecodedTypes
-    const userId = dataDecoded?.UserInfo.userId 
+    const dataDecoded = useDecodeToken() 
+    const userId = dataDecoded?.UserInfo.userId as string
     const [deleteWishlist] = useHandleWishlistMutation()
 
     const handleDeleteWishlist = async (e: any, productId: string) => {
         e.stopPropagation()
         try {
             const response = await deleteWishlist({userId, productId, method: 'delete'}).unwrap()
-            if(response.error) {
-                throw response.error
-            } else {
-                toast.success(response.message)
-            }
+            toast.success(response.message)
         } catch (error: any) {
             toast.error(error.data.message)
         }
@@ -42,10 +38,7 @@ const Products = ({products, isWishlist}: PropsTypes) => {
     return (
         <div className='grid grid-cols-cards-mobile sm:grid-cols-cards-tablet lg:grid-cols-cards-desktop gap-3 sm:gap-5 lg:gap-10'>
             {products.map((product: ProductTypes) => (
-                <Product 
-                    key={product._id} 
-                    data={product} 
-                    isWishlist={!isWishlist ? false : isWishlist}
+                <Product key={product._id} data={product} isWishlist={!isWishlist ? false : isWishlist}
                     handleDeleteWishlist={(e: any) => handleDeleteWishlist(e, product._id)}
                     handleAddCart={(e: any) => handleAddCart(e, product)}
                     productInCart={Boolean(cart.find((item: ProductTypes) => item._id === product?._id))}/>
@@ -53,5 +46,4 @@ const Products = ({products, isWishlist}: PropsTypes) => {
         </div>
     )
 }
-
 export default Products

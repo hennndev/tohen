@@ -9,6 +9,10 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             query: (userId: string) => `/users/${userId}`, 
             providesTags: ['User']
         }),
+        getUserInfo: builder.query({
+            query: (userId: string) => `/users/${userId}/user-info`,
+            providesTags: ['User']
+        }),
         getWishlist: builder.query({
             query: (userId: string) => `/users/${userId}/wishlist`,
             providesTags: ['User']
@@ -58,5 +62,5 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const { useGetUsersQuery, useGetUserQuery, useGetWishlistQuery, useGetOrdersHistoryQuery, useHandleWishlistMutation, useDeleteUserMutation, useChangePasswordMutation, useUpdateUserMutation, useChangePhotoProfileMutation } = usersApiSlice
+export const { useGetUsersQuery, useGetUserQuery, useGetUserInfoQuery, useGetWishlistQuery, useGetOrdersHistoryQuery, useHandleWishlistMutation, useDeleteUserMutation, useChangePasswordMutation, useUpdateUserMutation, useChangePhotoProfileMutation } = usersApiSlice
 

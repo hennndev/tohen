@@ -7,7 +7,7 @@ import { useForm, useFieldArray } from 'react-hook-form'
 import { useGetBrandsQuery } from '@/store/api/brandsApiSlice'
 import { useGetCategoriesQuery } from '@/store/api/categoriesApiSlice'
 // components
-import { X } from 'lucide-react'
+import { LuX } from 'react-icons/lu'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -191,99 +191,112 @@ const FilterProducts = ({isModal, setOpen, setOpenFilter}: PropsTypes) => {
     return (
         <Fragment>
             {!isModal && (  
-                <div className="flex-between mb-5 text-[#333] dark:text-gray-200">
+                <section className="flex-between mb-5 text-[#333] dark:text-gray-200">
                     <h1 className='text-xl xl:text-2xl font-semibold'>Filter Products</h1>
                     {queryLength > 0 && <Button variant="ghost" onClick={handleResetForm}>Reset</Button>}
-                </div>
+                </section>
             )}
-            <div className='text-[#333] dark:text-gray-400 mb-4'>
-                <h2 className='text-base xl:text-lg font-semibold mb-2'>Sort Products</h2>
-                <div className='flex flex-wrap'>
+            <section className='text-[#333] dark:text-gray-400 mb-4'>
+                <h2 className='text-base xl:text-lg font-semibold mb-2 dark:text-gray-200'>Sort Products</h2>
+                <section className='flex flex-wrap'>
                     {sorting.map(sortVal => (
                         <p key={sortVal.value} className={`text-base category-item ${sort === sortVal.value ? 'category-active' : ''}`} onClick={() => handleAddSort(sortVal.value)}>{sortVal.name}</p>
                     ))}
-                </div>
-            </div>
+                </section>
+            </section>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4 text-[#333] dark:text-gray-400 !text-base'>
                     {/* CATEGORY */}
-                    <div className='flex flex-col space-y-2'>
+                    <section className='flex flex-col space-y-2'>
                         <FormItem>
-                            <FormLabel className='text-base xl:text-lg font-semibold'>Products Category</FormLabel>
+                            <FormLabel className='text-base xl:text-lg font-semibold dark:text-gray-200'>
+                                Products Category
+                            </FormLabel>
                             {dataCategories?.data.map((obj: CategoryTypes) => (
                                 <FormField key={obj._id} control={form.control} name="category" render={({ field }) => (
                                     <FormItem>
                                         <FormControl>
-                                            <div className="flex items-center space-x-2 mb-1.5" key={obj.category}>
-                                                <Checkbox checked={field.value.includes(obj.category)} onCheckedChange={(checked) => {
-                                                    return checked ?
-                                                        field.onChange([...field.value, obj.category]) :
-                                                        field.onChange(field.value.filter((value) => value !== obj.category))                    
-                                                }} id={obj.category}/>
-                                                <label htmlFor={obj.category} className={`text-md capitalize ${field.value.find(value => value === obj.category) ? 'text-gray-200' : ''}`}>
+                                            <section className="flex items-center space-x-2 mb-1.5" key={obj.category}>
+                                                <Checkbox 
+                                                    id={obj.category}
+                                                    checked={field.value.includes(obj.category)} 
+                                                    onCheckedChange={(checked) => {
+                                                        return checked ?
+                                                            field.onChange([...field.value, obj.category]) :
+                                                            field.onChange(field.value.filter((value) => value !== obj.category))                    
+                                                }}/>
+                                                <label htmlFor={obj.category} className={`text-md capitalize ${field.value.find(value => value === obj.category) ? 'text-[#000] dark:text-gray-200' : ''}`}>
                                                     {obj.category.includes('-') ? obj.category.replaceAll('-', ' ') : obj.category}
                                                 </label>                 
-                                            </div>
+                                            </section>
                                         </FormControl>
                                     </FormItem>
                                 )}/>
                             ))}
                         </FormItem>
-                    </div>
+                    </section>
                     {/* BRANDS */}
-                    <div className='flex flex-col space-y-2'>
+                    <section className='flex flex-col space-y-2'>
                         <FormItem>
-                            <FormLabel className='text-base xl:text-lg font-semibold'>Brands Products</FormLabel>
+                            <FormLabel className='text-base xl:text-lg font-semibold dark:text-gray-200'>Brands Products</FormLabel>
                             {dataBrands?.data.map((obj: BrandTypes) => (
                                 <FormField key={obj._id} control={form.control} name="brand" render={({ field }) => (
                                     <FormItem>
                                         <FormControl>
-                                            <div className="flex items-center space-x-2 mb-1.5" key={obj.brand}>
-                                                <Checkbox checked={field.value.includes(obj.brand)} onCheckedChange={(checked) => {
-                                                    return checked ?
-                                                        field.onChange([...field.value, obj.brand]) :
-                                                        field.onChange(field.value.filter((value) => value !== obj.brand))                    
-                                                }} id={obj.brand}/>
-                                                <label htmlFor={obj.brand} className={`text-md capitalize ${field.value.find(value => value === obj.brand) ? 'text-gray-200' : ''}`}>
+                                            <section className="flex items-center space-x-2 mb-1.5" key={obj.brand}>
+                                                <Checkbox 
+                                                    id={obj.brand}
+                                                    checked={field.value.includes(obj.brand)} 
+                                                    onCheckedChange={(checked) => {
+                                                        return checked ?
+                                                            field.onChange([...field.value, obj.brand]) :
+                                                            field.onChange(field.value.filter((value) => value !== obj.brand))                    
+                                                }}/>
+                                                <label htmlFor={obj.brand} className={`text-md capitalize ${field.value.find(value => value === obj.brand) ? 'text-[#000] dark:text-gray-200' : ''}`}>
                                                     {obj.brand.includes('-') ? obj.brand.replaceAll('-', ' ') : obj.brand}
                                                 </label>                 
-                                            </div>
+                                            </section>
                                         </FormControl>
                                     </FormItem>
                                 )}/>
                             ))}
                         </FormItem>
-                    </div>
+                    </section>
                     {/* CONDITION */}
-                    <div className='flex flex-col space-y-2'>
+                    <section className='flex flex-col space-y-2'>
                         <FormItem>
-                            <FormLabel className='text-base xl:text-lg font-semibold'>Products Condition</FormLabel>
+                            <FormLabel className='text-base xl:text-lg font-semibold dark:text-gray-200'>Products Condition</FormLabel>
                             {condition.map(obj => (
                                 <FormField key={obj.value} control={form.control} name="condition" render={({ field }) => (
                                     <FormItem>
                                         <FormControl>
-                                            <div className="flex items-center space-x-2 mb-1.5" key={obj.value}>
-                                                <Checkbox checked={field.value.includes(obj.value)} onCheckedChange={(checked) => {
-                                                    return checked ?
-                                                        field.onChange([...field.value, obj.value]) :
-                                                        field.onChange(field.value?.filter((value) => value !== obj.value))                    
-                                                }} id={obj.value}/>
-                                                <label htmlFor={obj.value} className={`text-md ${field.value.find(value => value === obj.value) ? 'text-gray-200' : ''}`}>
+                                            <section className="flex items-center space-x-2 mb-1.5" key={obj.value}>
+                                                <Checkbox 
+                                                    id={obj.value}
+                                                    checked={field.value.includes(obj.value)} 
+                                                    onCheckedChange={(checked) => {
+                                                        return checked ?
+                                                            field.onChange([...field.value, obj.value]) :
+                                                            field.onChange(field.value?.filter((value) => value !== obj.value))                    
+                                                }}/>
+                                                <label htmlFor={obj.value} className={`text-md ${field.value.find(value => value === obj.value) ? 'text-[#000] dark:text-gray-200' : ''}`}>
                                                     {obj.name}
                                                 </label>
-                                            </div>
+                                            </section>
                                         </FormControl>
                                     </FormItem>
                                 )}/>
                             ))}
                         </FormItem>
-                    </div>
+                    </section>
                     {/* PRICE GROUP */}
-                    <div className={`flex ${!isModal ? 'flex-col space-y-3' : 'space-x-3'}`}>
+                    <section className={`flex ${!isModal ? 'flex-col space-y-3' : 'space-x-3'}`}>
                         {/* LOWEST PRICE */}
                         <FormField control={form.control} name="lowest_price" render={({ field }) => (
                             <FormItem className='flex-1'>
-                                <FormLabel htmlFor='lowest_price' className='text-base xl:text-lg font-semibold'>Lowest Price</FormLabel>
+                                <FormLabel htmlFor='lowest_price' className='text-base xl:text-lg font-semibold dark:text-gray-200'>
+                                    Lowest Price
+                                </FormLabel>
                                 <FormControl id='lowest_price'>
                                     <Input type='number' {...field} onChange={(e: ChangeEvent<HTMLInputElement>) => field.onChange(+e.target.value)} placeholder='Type price amount minimum...' className='dark:text-gray-200'/>
                                 </FormControl>
@@ -292,43 +305,49 @@ const FilterProducts = ({isModal, setOpen, setOpenFilter}: PropsTypes) => {
                         {/* HIGHEST PRICE */}
                         <FormField control={form.control} name="highest_price" render={({ field }) => (
                             <FormItem className='flex-1'>
-                                <FormLabel htmlFor='highest_price' className='text-base xl:text-lg font-semibold'>Highest Price</FormLabel>
+                                <FormLabel htmlFor='highest_price' className='text-base xl:text-lg font-semibold dark:text-gray-200'>
+                                    Highest Price
+                                </FormLabel>
                                 <FormControl id='highest_price'>
                                     <Input type='number' {...field} onChange={(e: ChangeEvent<HTMLInputElement>) => field.onChange(+e.target.value)} placeholder='Type price amount maximum...' className='dark:text-gray-200'/>
                                 </FormControl>
                             </FormItem>
                         )}/>
-                    </div>
+                    </section>
                     {/* TAGS */}
-                    <div className="flex flex-col space-y-3">
-                        <div className="flex flex-col space-y-2">
-                            <FormLabel htmlFor='tag' className='text-base xl:text-lg font-semibold'>Product tags</FormLabel>
-                            <div className="flexx space-x-2">
+                    <section className="flex flex-col space-y-3">
+                        <section className="flex flex-col space-y-2">
+                            <FormLabel htmlFor='tag' className='text-base xl:text-lg font-semibold dark:text-gray-200'>
+                                Product tags
+                            </FormLabel>
+                            <section className="flexx space-x-2">
                                 <Input id='tag' ref={tagRef} value={tagTerm} onChange={(e: ChangeEvent<HTMLInputElement>) => setTagTerm(e.target.value)} placeholder="Input tag here..." className='dark:text-gray-200'/>
                                 <Button type='button' variant='outline' disabled={!tagTerm} onClick={handleAddTag}>Add</Button>
-                            </div>
+                            </section>
                             <FormDescription>Filter using product tags to filter related and specific products what you search</FormDescription>
-                        </div>
+                        </section>
                         {fields.length > 0 && (
-                            <div className="flexx flex-wrap">
+                            <section className="flexx flex-wrap">
                                 {fields.map((field, index) => (
-                                    <div className='relative shadow dark:border dark:border-[#222] py-2 px-4 rounded-lg cursor-pointer mr-4 mb-2' key={field.id}>
-                                        <X className='absolute top-0 right-0 w-3.5 h-3.5' onClick={() => remove(index)}/>
+                                    <section className='relative shadow dark:border dark:border-[#222] py-2 px-4 rounded-lg cursor-pointer mr-4 mb-2' key={field.id}>
+                                        <LuX className='absolute top-0 right-0 w-3.5 h-3.5' onClick={() => remove(index)}/>
                                         {field.name}
-                                    </div>
+                                    </section>
                                 ))}
-                            </div>
+                            </section>
                         )}
-                    </div>
-                    <div className='flexx space-x-3 justify-end !mt-10'>
+                    </section>
+                    <section className='flexx space-x-3 justify-end !mt-10'>
                         {isModal && (
                             <Fragment>
                                 <Button type='button' variant='outline' onClick={() => setOpen && setOpen(false)}>Cancel</Button>
                                 <Button type='button' variant='destructive' onClick={handleResetForm}>Reset</Button>
                             </Fragment>
                         )}
-                        <Button type='submit' className={`${!isModal ? 'w-full' : ''}`}>{!isModal ? 'Filter Products' : 'Confirm'}</Button>
-                    </div>
+                        <Button type='submit' className={`${!isModal ? 'w-full' : ''}`}>
+                            {!isModal ? 'Filter Products' : 'Confirm'}
+                        </Button>
+                    </section>
                 </form>
             </Form>         
         </Fragment>

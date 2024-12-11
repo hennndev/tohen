@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux'
+import { handleIsSidebarProfile } from '@/store/features/layoutSlice'
+// components
 import { Button } from '@/components/ui/button'
 import { ChevronLeftCircle } from 'lucide-react'
-import { handleIsSidebarProfile } from '@/store/features/layoutSlice'
-
 
 const ButtonOpenSidebar = () => {
     const dispatch = useDispatch()
@@ -12,5 +12,4 @@ const ButtonOpenSidebar = () => {
         </Button>
     )
 }
-
 export default ButtonOpenSidebar

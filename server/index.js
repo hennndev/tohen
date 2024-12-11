@@ -7,9 +7,10 @@ const app = express()
 require('dotenv').config()
 // routes
 const authRoute = require('./routers/authRoute')
-const productRoute = require('./routers/productRoute')
 const userRoute = require('./routers/userRoute')
+const productRoute = require('./routers/productRoute')
 const paymentRoute = require('./routers/paymentRoutes')
+
 
 app.use(express.json())
 app.use(cors(corsOptions))
@@ -19,7 +20,8 @@ mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         app.listen(process.env.PORT || 3000, () => console.log('Server and database connected'))
     })
-    .catch(() => {
+    .catch((error) => {
+        console.log(error)
         console.log('Server and database failed connected')
     })
 app.use(productRoute)

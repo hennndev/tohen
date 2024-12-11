@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux'
-import { rupiahFormat } from '@/utils/utils'  
 import { useNavigate } from 'react-router-dom' 
 import type { AppDispatch } from '@/store/store'
 import { addCart, deleteCart, decrement } from '@/store/features/cartSlice'
@@ -9,16 +8,17 @@ import { Button } from '@/components/ui/button'
 
 type PropsTypes = {
     item: ProductCartTypes
-    handleAddWishlist: () => void
-    isWishlist: boolean
+    inWishlist: boolean
     isAdmin: boolean
     isLoggedIn: string | null
+    handleAddWishlist: () => void
 }
 
-const CartItem = ({item, handleAddWishlist, isWishlist, isAdmin, isLoggedIn}: PropsTypes) => {
+const CartItem = ({item, handleAddWishlist, inWishlist, isAdmin, isLoggedIn}: PropsTypes) => {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
     const totalPrice = (item.discount?.is_discount ? (item.price - (item.discount.discount_percentage / 100) * item.price) : item.price) * item.count
+
     return (
         <div className='flexx group space-x-10'>
             <div className="flex flex-1 lg:flex-1 xl:flex-[0.45] space-x-5 md:space-x-3">
@@ -56,9 +56,9 @@ const CartItem = ({item, handleAddWishlist, isWishlist, isAdmin, isLoggedIn}: Pr
                     <div className='flex lg:flex xl:hidden flex-col space-y-2 !mt-2'>
                         <div className='flexx space-x-3'>
                             {isLoggedIn && !isAdmin && (
-                                <Button size='sm' variant='outline' disabled={isWishlist} className='px-2 text-sm' onClick={handleAddWishlist}>
-                                    {!isWishlist && <Plus className='w-4 h-4 mr-2'/>}
-                                    {isWishlist ? 'Already in wishlist' : 'Add wishlist'}
+                                <Button size='sm' variant='outline' disabled={inWishlist} className='px-2 text-sm' onClick={handleAddWishlist}>
+                                    {!inWishlist && <Plus className='w-4 h-4 mr-2'/>}
+                                    {inWishlist ? 'Already in wishlist' : 'Add wishlist'}
                                 </Button>
                             )}
                             <Button size='sm' variant='destructive' className='px-2 text-sm' onClick={() => dispatch(deleteCart(item._id))}>Hapus</Button>
@@ -84,9 +84,9 @@ const CartItem = ({item, handleAddWishlist, isWishlist, isAdmin, isLoggedIn}: Pr
                     <p>Action</p>
                     <div className='flexx space-x-3'>
                         {isLoggedIn && !isAdmin && (
-                            <Button size='sm' variant='outline' disabled={isWishlist} className='px-2 text-sm' onClick={handleAddWishlist}>
-                                {!isWishlist && <Plus className='w-4 h-4 mr-2'/>}
-                                {isWishlist ? 'Already in wishlist' : 'Add wishlist'}
+                            <Button size='sm' variant='outline' disabled={inWishlist} className='px-2 text-sm' onClick={handleAddWishlist}>
+                                {!inWishlist && <Plus className='w-4 h-4 mr-2'/>}
+                                {inWishlist ? 'Already in wishlist' : 'Add wishlist'}
                             </Button>
                         )}
                         <Button size='sm' variant='destructive' className='px-2 text-sm' onClick={() => dispatch(deleteCart(item._id))}>Hapus</Button>
@@ -94,11 +94,10 @@ const CartItem = ({item, handleAddWishlist, isWishlist, isAdmin, isLoggedIn}: Pr
                 </div>
                 <div className='flex flex-col space-y-1'>
                     <p>Total</p>
-                    <h1 className='font-semibold text-lg'>${totalPrice}</h1>
+                    <h1 className='font-semibold text-lg'>${totalPrice.toFixed(2)}</h1>
                 </div>
             </div>
         </div>
     )
 }
-
 export default CartItem

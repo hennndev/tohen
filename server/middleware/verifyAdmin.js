@@ -1,29 +1,29 @@
 const jwt = require('jsonwebtoken')
 
-
 const verifyAdmin = async (req, res, next) => {
-    // check access token in the request 
+    //Mengambil data token akses pada header request 
     const authHeader = req.headers.authorization || req.headers.authorization
     if(!authHeader) {
-        // check if the headers not contains authorization, then return 401 
+        //// Jika tidak ada auhotorization pada header, maka akan di return status 401
         return res.status(401).json({message: 'Unauthorized', ok: false})
     }
     if(!authHeader.startsWith('Bearer')) {
-        // check if the headers not contains Bearer token in the authorization
+        // Jika tidak ada bearer token, maka akan di return status 401
         return res.status(401).json({message: 'Unauthorized', ok: false})
     }
-    // split and get the token
+    // mengambil token akses
     const accessToken = authHeader.split(' ')[1]
 
+    //Kemudian verify token akses tersebut
     jwt.verify(
         accessToken,
         process.env.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
             if(err) {
-                // if expired then return 403
+                // Cek jika token akses sudah kadaluarsa, maka akan direturn 403
                 return res.status(403).json({ message: 'Forbidden', ok: false })
             }
-            // if not an admin, then retuern 403 and custom message
+            // Cek jika user role bukan admin, maka akan direturn 403, dengan message yang berbeda
             if(decoded.UserInfo.role !== 'admin') {
                 return res.status(403).json({message: 'Forbidden. You are not an admin.', ok: false})
             }

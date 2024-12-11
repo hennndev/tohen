@@ -6,13 +6,14 @@ import { Button } from '@/components/ui/button'
 type PropsTypes = {
     data: ProductTypes 
     isWishlist: boolean
+    productInCart: boolean
     handleDeleteWishlist: (e: any) => void
     handleAddCart: (e: any) => void
-    productInCart: boolean
 }
 
-const Product = ({data, isWishlist, handleDeleteWishlist, handleAddCart, productInCart}: PropsTypes) => {
+const Product = ({data, isWishlist, productInCart, handleDeleteWishlist, handleAddCart}: PropsTypes) => {
     const navigate = useNavigate()
+    
     return (
         <div onClick={() => navigate(`/products/${data.name.replaceAll(' ', '-')}?id=${data._id}`)} className={`min-h-[70px] border border-gray-200 dark:border-gray-800 p-3 rounded-md shadow-sm relative overflow-hidden`}>
             {data.stock < 1 && <div className='absolute top-0 right-0 left-0 bottom-0 w-full h-full bg-[rgba(0,0,0,0.2)]'/>}

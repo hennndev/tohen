@@ -5,16 +5,17 @@ import { useGetWishlistQuery, useHandleWishlistMutation } from '@/store/api/user
 // components
 import { Button } from '@/components/ui/button'
 import PageLoader from '@/components/shared/PageLoader'
-import CustomPage from '@/components/shared/HelmetPage'
+import HelmetPage from '@/components/shared/HelmetPage'
 import Products from '@/components/client/products/Products'
 
 const Wishlist = () => {
     const dataDecoded = useDecodeToken()
     const [skip, setSkip] = useState<boolean>(true)
-    const userId = dataDecoded?.UserInfo?.userId as string
     const [wishlist, setWishlist] = useState<ProductsTypes | []>([])
-    const { data: wishlistData, isLoading } = useGetWishlistQuery(userId, {skip})
+    
     const [clearWishlist] = useHandleWishlistMutation()
+    const userId = dataDecoded?.UserInfo?.userId as string
+    const { data, isLoading } = useGetWishlistQuery(userId, {skip})
     
     const handleClearWishlist = async () => {
         try {
@@ -31,20 +32,19 @@ const Wishlist = () => {
     }, [dataDecoded])
 
     useEffect(() => {
-        if(!skip && wishlistData) {
-            setWishlist(wishlistData.data)
+        if(!skip && data) {
+            setWishlist(data.data)
         }
-    }, [skip, wishlistData])
-
+    }, [skip, data])
 
     return (
         <Fragment>
-            <CustomPage title='TOHEN | Wishlist' content='Wishlist page'/>
+            <HelmetPage title='TOHEN | Wishlist' content='Wishlist page'/>
             <section className='flex md:container px-5'>
                 <div className='flex-1'>
                     <h1 className='text-2xl font-semibold'>Wishlist</h1>
-                    {isLoading && !wishlistData && <PageLoader/>}
-                    {!isLoading && wishlistData && (
+                    {isLoading && !data && <PageLoader/>}
+                    {!isLoading && data && (
                         <Fragment>
                             <p className='mb-3 mt-3'>Showing {wishlist.length} products from total {wishlist.length} products wishlist</p>
                             {wishlist.length > 0 && <Button variant='outline' className='mb-10' onClick={handleClearWishlist}>Clear wishlist</Button>}
@@ -56,5 +56,4 @@ const Wishlist = () => {
         </Fragment>
     )
 }
-
 export default Wishlist

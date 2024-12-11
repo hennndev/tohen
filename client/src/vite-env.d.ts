@@ -31,6 +31,14 @@ type ProductCartTypes = ProductTypes & {count: number}
 
 type ProductsCartTypes = Array<ProductCartTypes>
 
+type ProductsCartFormatTypes = Array<{
+    _id: string
+    name: string
+    qty: number
+    image: string
+    unit_amount: number
+}>
+
 
 
 type DataDecodedTypes = {
@@ -39,8 +47,6 @@ type DataDecodedTypes = {
         role: string
     }
 }
-
-
 
 
 // Categories 
@@ -72,11 +78,28 @@ type UserDataTypes = {
         photo_url: string | null
     }
     personal_information: {
-        full_address: string
-        city: string
-        province: string
-        region: string
-        postal_code: string
         phone_number: string
+        full_address: string
+        postal_code: string
+        city: string
+        state: string
+        region: string
     },
+}
+
+type RecipientTypes = {
+    email: string
+    fullname: string
+    full_address: string
+    phone_number: string
+    postal_code: number | string
+    city: string
+    state: string
+    region: string
+}
+
+
+// Order History
+type OrderTypes = {
+    
 }

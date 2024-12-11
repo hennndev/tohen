@@ -2,6 +2,8 @@ import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
 import useDecodeToken from '@/hooks/useDecodeToken'
 import { getCurrentToken } from '@/store/features/authSlice'
+import { useGetBrandsQuery } from '@/store/api/brandsApiSlice'
+import { useGetCategoriesQuery } from '@/store/api/categoriesApiSlice'
 // components
 import { Shell } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -11,12 +13,14 @@ const Footer = () => {
     const dataDecoded = useDecodeToken()
     const currentToken = useSelector(getCurrentToken)
     const userRole = dataDecoded?.UserInfo?.role as string
+    const {data: brandsData, isSuccess: isSuccessCategoriesData} = useGetBrandsQuery('')
+    const {data: categoriesData, isSuccess: isSuccessBrandsData} = useGetCategoriesQuery('')
 
     return (
         <footer className='!min-h-[380px] w-full bg-[#222] dark:bg-[#111] mt-auto'>
             <div className='!container p-5 pt-10 pb-0'>
                 <div className='flex flex-wrap justify-between pb-5 border-b border-gray-700 xl:space-x-10'>
-                    <div className='flex flex-col space-y-4 mr-10 mb-10'>
+                    <div className='flex flex-col space-y-4 mr-5 mb-10 max-w-[300px]'>
                         <h1 className='flexx text-3xl font-bold text-gray-100 !mb-5'>
                             <Shell className='mr-2'/>
                             TOHEN.
@@ -26,10 +30,10 @@ const Footer = () => {
                                 <h1 className='text-2xl font-bold text-gray-200'>Subscribe</h1>
                                 <p className='text-gray-400'>Receive products news and update on your inbox</p>
                             </div>
-                            <Input type='email' id='email' className='max-w-[300px] placeholder:text-center lg:placeholder:text-left' placeholder="Input email here"/>
+                            <Input type='email' id='email' className='max-w-[250px] placeholder:text-center lg:placeholder:text-left' placeholder="Input email here"/>
                         </div>
                     </div>
-                    <div className='flex flex-col space-y-3 text-gray-100 mr-10 lg:mr-0 mb-10'>
+                    <div className='flex flex-col space-y-3 text-gray-100 mr-10 lg:mr-0 mb-10 min-w-[100px] max-w-[230px]'>
                         <h2 className='text-xl font-bold'>Company</h2>
                         <Link to='/products' className='text-base text-gray-400'>About Us</Link>
                         <Link to='/products' className='text-base text-gray-400'>FAQ</Link>
@@ -38,23 +42,7 @@ const Footer = () => {
                         <Link to='/products' className='text-base text-gray-400'>Affiliate</Link>
                         <Link to='/products' className='text-base text-gray-400'>Strategic Partners</Link>
                     </div>
-                    <div className='flex flex-col space-y-3 text-gray-100 mr-10 lg:mr-0 mb-10'>
-                        <h2 className='text-xl font-bold'>Products</h2>
-                        <Link to='/products?category=laptop' className='text-base text-gray-400'>Laptop</Link>
-                        <Link to='/products?category=smartphone' className='text-base text-gray-400'>Smartphone</Link>
-                        <Link to='/products?category=camera' className='text-base text-gray-400'>Camera</Link>
-                        <Link to='/products?category=tablet' className='text-base text-gray-400'>Tablet</Link>
-                    </div>
-                    <div className='flex flex-col space-y-3 text-gray-100 mr-10 lg:mr-0 mb-10'>
-                        <h2 className='text-xl font-bold'>Brands</h2>
-                        <Link to='/products?brand=ASUS' className='text-base text-gray-400'>ASUS</Link>
-                        <Link to='/products?brand=Apple' className='text-base text-gray-400'>Apple</Link>
-                        <Link to='/products?brand=Lenovo' className='text-base text-gray-400'>Lenovo</Link>
-                        <Link to='/products?brand=Samsung' className='text-base text-gray-400'>Samsung</Link>
-                        <Link to='/products?brand=HP' className='text-base text-gray-400'>HP</Link>
-                        <Link to='/products?brand=Dell' className='text-base text-gray-400'>Dell</Link>
-                    </div>
-                    <div className='flex flex-col space-y-3 text-gray-100 mr-10 lg:mr-0 mb-10'>
+                    <div className='flex flex-col space-y-3 text-gray-100 mr-10 lg:mr-0 mb-10 min-w-[100px] max-w-[230px]'>
                         <h2 className='text-xl font-bold'>Menu</h2>
                         <Link to='/' className='text-base text-gray-400'>Homepage</Link>
                         <Link to='/products' className='text-base text-gray-400'>Products</Link>
@@ -68,7 +56,19 @@ const Footer = () => {
                         )}
                         {dataDecoded && currentToken && <Link to='/profile' className='text-base text-gray-400'>Profile</Link>}
                     </div>
-                    <div className='flex flex-col space-y-3 text-gray-100 mr-10 lg:mr-0 mb-10'>
+                    <div className='flex flex-col space-y-3 text-gray-100 mr-10 lg:mr-0 mb-10 min-w-[100px] max-w-[230px]'>
+                        <h2 className='text-xl font-bold'>Products</h2>
+                        {isSuccessCategoriesData && categoriesData?.data.map((category: CategoryTypes) => (
+                            <Link to={`/products?category=${category.category}`} key={category._id} className='text-base text-gray-400 capitalize'>{category.category}</Link>
+                        ))}
+                    </div>
+                    <div className='flex flex-col space-y-3 text-gray-100 mr-10 lg:mr-0 mb-10 min-w-[100px] max-w-[230px]'>
+                        <h2 className='text-xl font-bold'>Brands</h2>
+                        {isSuccessBrandsData && brandsData?.data.map((brand: BrandTypes) => (
+                            <Link to={`/products?brand=${brand.brand}`} key={brand._id} className='text-base text-gray-400 capitalize'>{brand.brand}</Link>
+                        ))}
+                    </div>
+                    <div className='flex flex-col space-y-3 text-gray-100 mr-10 lg:mr-0 mb-10 min-w-[100px] max-w-[230px]'>
                         <h2 className='text-xl font-bold'>Contact  </h2>
                         <p className='text-base text-gray-400'>
                             Email <br />

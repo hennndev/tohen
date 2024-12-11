@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom"
+// components
 import Navbar from "@/components/admin/layout/Navbar"
 import Sidebar from "@/components/admin/layout/Sidebar"
 
@@ -13,5 +14,4 @@ const AdminLayout = () => {
         </main>
     )
 }
-
 export default AdminLayout

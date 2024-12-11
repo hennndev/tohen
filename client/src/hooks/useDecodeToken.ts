@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { jwtDecode, JwtPayload } from "jwt-decode"
+import { jwtDecode} from "jwt-decode"
 import { useSelector } from 'react-redux'
 import { getCurrentToken } from '@/store/features/authSlice'
 
@@ -14,5 +14,4 @@ const useDecodeToken = () => {
     }, [token])
     return dataDecoded
 }
-
 export default useDecodeToken

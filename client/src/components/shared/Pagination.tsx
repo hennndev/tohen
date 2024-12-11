@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import queryString from 'query-string'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useQueryParams } from '@/hooks/useQueryParams'
+// component
 import { Pagination as PaginationContainer, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 
 type PropsTypes = {
@@ -12,6 +13,7 @@ type PropsTypes = {
 const DATA_LIMIT = import.meta.env.VITE_DATA_ROW_TABLE
 
 const Pagination = ({dataCount, currentDataLength}: PropsTypes) => {
+    const navigate = useNavigate()
     const location = useLocation()
     const queryStr = queryString.parse(location.search)
     const [page, setPage] = useState<number>(parseInt(queryStr.page as string) || 1)
@@ -43,12 +45,18 @@ const Pagination = ({dataCount, currentDataLength}: PropsTypes) => {
     }
 
     const isNext = (((page - 1) * DATA_LIMIT) + currentDataLength) < dataCount
-
-    const isCondition = page < 4 ? false : (((page - 1) * DATA_LIMIT) + currentDataLength) > (((page - 2) * DATA_LIMIT))
-    
+    const isCondition = page < 4 ? false : (((page - 1) * DATA_LIMIT) + currentDataLength) > (((page - 2) * DATA_LIMIT)) 
     let firstNumber = 1 + (isCondition ? Math.floor((((((page - 1)) + currentDataLength) / 3) - 0.1)) * 3 : 0)
     const secondNumber = firstNumber + 1
     const thirdNumber = firstNumber + 2
+
+    useEffect(() => {
+        if(page > 1 && currentDataLength < 1) {
+            navigate(location.pathname)
+            setPage(1)
+        }
+    }, [page, currentDataLength])
+    
     
     return (
         <PaginationContainer>
@@ -82,5 +90,4 @@ const Pagination = ({dataCount, currentDataLength}: PropsTypes) => {
         </PaginationContainer>
     )
 }
-
 export default Pagination

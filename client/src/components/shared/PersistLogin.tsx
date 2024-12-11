@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { getCurrentToken } from '@/store/features/authSlice'
 import { useRefreshMutation } from '@/store/api/authApiSlice'
-import { useDispatch } from 'react-redux'
 
 const PersistLogin = () => {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
     const effectRan = useRef(false)
     const accessToken = useSelector(getCurrentToken)
     const [successRefresh, setSuccessRefresh] = useState<boolean>(false)

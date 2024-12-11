@@ -18,26 +18,23 @@ type PropsTypes = {
 
 const AccountDeleteForm = ({username, setOpen}: PropsTypes) => {
     const navigate = useNavigate()
+    const dataDecoded = useDecodeToken()
     const dispatch = useDispatch<AppDispatch>()
+
+    const userId = dataDecoded?.UserInfo.userId as string
+    const [deleteAccount, {isLoading}] = useDeleteUserMutation()
     const { register, formState: {errors}, handleSubmit, setValue } = useForm<{username: string}>({
         defaultValues: {
             username: ''
         }
     })
-    const dataDecoded = useDecodeToken()
-    const userId = dataDecoded?.UserInfo.userId as string
-    const [deleteAccount, {isLoading}] = useDeleteUserMutation()
 
     const onSubmit = async (values: {username: string}) => {
         try {
             const response = await deleteAccount({userId, isUsername: values.username}).unwrap()
-            if(response.error) {
-                throw response.error
-            } else {
-                toast.success(response.message)
-                dispatch(logout())
-                navigate('/products')
-            }
+            navigate('/products')
+            toast.success(response.message)
+            dispatch(logout())
         } catch (error: any) {
             toast.error(error.data.message)            
         }
@@ -51,26 +48,25 @@ const AccountDeleteForm = ({username, setOpen}: PropsTypes) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className='flex flex-col space-y-2'>
-                <Input id='username' disabled={isLoading} placeholder="Input username here..." 
+                <Input id='username' disabled={isLoading} placeholder="Input your username here..." 
                     {...register('username', {
-                        required: 'Field ini wajib diisi!',
+                        required: 'Username field is required',
                         validate: (value: string) => {
-                            return value === username || 'Value tidak sesuai dengan username anda'
+                            return value === username || 'Username not match with your username'
                         }
                     })} />
-                <p className='text-red-500 font-medium text-sm text-center'>{errors.username?.message}</p>
+                <p className='text-red-500 font-medium text-sm '>{errors.username?.message}</p>
             </div>
-            <p className='mb-3 text-center mt-3'>Ketik kata ini untuk melanjutkan hapus account {' '}
-                <span className='text-red-600 italic'>
+            <p className='mb-3 text-center mt-3'>
+                Type your username to confirm delete your account {' '} <span className='text-red-600 italic'>
                     {username}
                 </span>
             </p>
             <div className="flex-center space-x-3">
-                <Button type='button' variant='outline' onClick={handleCancel}>Cancel</Button>
-                <Button type='submit' variant='destructive'>Submit</Button>
+                <Button disabled={isLoading} type='button' variant='outline' onClick={handleCancel}>Cancel</Button>
+                <Button disabled={isLoading} type='submit' variant='destructive'>Submit</Button>
             </div>
         </form>
     )
 }
-
 export default AccountDeleteForm

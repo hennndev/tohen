@@ -2,10 +2,11 @@ const express = require('express')
 const router = express.Router()
 const verifyJWT = require('../middleware/verifyJWT')
 const verifyAdmin = require('../middleware/verifyAdmin')
-const { getUsers, getUser, handleWishlist, getWishlist, deleteUser, changePassword, updateUser, changePhoto, getOrdersHistory } = require('../controllers/userController')
+const { getUsers, getUserDetails, getUserInfo, handleWishlist, getWishlist, deleteUser, changePassword, updateUser, changePhoto, getOrdersHistory } = require('../controllers/userController')
 
 router.get('/api/users', verifyAdmin, async (req, res) => await getUsers(req, res))
-router.get('/api/users/:userId', verifyJWT, async (req, res) => await getUser(req, res))
+router.get('/api/users/:userId', verifyJWT, async (req, res) => await getUserDetails(req, res))
+router.get('/api/users/:userId/user-info', verifyJWT, async (req, res) => await getUserInfo(req, res))
 router.get('/api/users/:userId/wishlist', verifyJWT, async (req, res) => await getWishlist(req, res))
 router.get('/api/users/:userId/orders-history', verifyJWT, async (req, res) => await getOrdersHistory(req, res))
 

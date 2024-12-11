@@ -19,7 +19,7 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['customer', 'admin'],
+        enum: ['customer', 'admin', 'manager'],
         required: true
     },
     photo: {
@@ -28,32 +28,6 @@ const userSchema = new Schema({
             default: null
         },
         photo_url: {
-            type: String,
-            default: null
-        }
-    },
-    personal_information: {
-        full_address: {
-            type: String,
-            default: null
-        },
-        city: {
-            type: String,
-            default: null
-        },
-        province: {
-            type: String,
-            default: null 
-        },
-        region: {
-            type: String,
-            default: null
-        },
-        postal_code: {
-            type: Number,
-            default: null
-        },
-        phone_number: {
             type: String,
             default: null
         }

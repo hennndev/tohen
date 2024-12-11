@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+// components
 import FilterProducts from '@/components/shared/FilterProducts'
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 

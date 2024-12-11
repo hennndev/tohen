@@ -7,17 +7,18 @@ import PageLoader from '@/components/shared/PageLoader'
 import ProfileForm from '@/components/client/forms/ProfileForm'
 
 const UpdateProfile = () => {
-    const dataDecode = useDecodeToken()
+    const dataDecoded = useDecodeToken()
     const [skip, setSkip] = useState<boolean>(true)
     const [userData, setUserData] = useState<null | UserDataTypes>(null)
-    const userId = dataDecode?.UserInfo.userId as string
+    
+    const userId = dataDecoded?.UserInfo.userId as string
     const {data: data, isLoading} = useGetUserQuery(userId, {skip})
 
     useEffect(() => {
-        if(userId) {
+        if(dataDecoded) {
             setSkip(false)
         }
-    }, [userId])
+    }, [dataDecoded])
 
     useEffect(() => {
         if(data) {

@@ -17,7 +17,6 @@ import { Download, X, Plus, Trash, Loader2 } from 'lucide-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 
-
 const defaultValues = {
     name: '',
     category: '',

@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom"
+// components
 import Navbar from "@/components/client/layout/Navbar"
 import Footer from "@/components/client/layout/Footer"
 
@@ -13,5 +14,4 @@ const ClientLayout = () => {
         </main>
     )
 }
-
 export default ClientLayout

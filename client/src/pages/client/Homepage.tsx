@@ -1,12 +1,6 @@
-import CustomPage from '@/components/shared/HelmetPage'
+import { Navigate } from 'react-router-dom'
 
 const Homepage = () => {
-    return (
-        <section className='flex container'>
-            <CustomPage title='TOHEN | Homepage' content='Homepage'/>
-            <h1>Homepage</h1>
-        </section>
-    )
+    return <Navigate to={'/products'}/>
 }
-
 export default Homepage

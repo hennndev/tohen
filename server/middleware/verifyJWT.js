@@ -1,22 +1,26 @@
 const jwt = require('jsonwebtoken')
 
+//Middleware untuk verifikasi user login apakah ada token akses atau tidak, dan token tidak kadaluarsa
 const verifyJWT = async (req, res, next) => {
+    //Mengambil data token akses pada header request
     const authHeader = req.headers.authorization || req.headers.Authorization
     if(!authHeader?.startsWith('Bearer')) {
-        // if headers not contains Bearer token, then will return 401
+        // Cek jika tidak ada bearer token, maka akan di return status 401
         return res.status(401).json({message: 'Unauthorized', ok: false})
     }
-    // split and get the token
+    // mengambil token akses
     const accessToken = authHeader.split(' ')[1]
 
+    //kemudian verify token akses tersebut
     jwt.verify(
         accessToken,
         process.env.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
             if(err) {
-                // if expired, then return 403
+                // Cek jika token sudah kadaluarsa, akan di return 403
                 return res.status(403).json({message: 'Forbidden', ok: false})
             }
+            //Jika tidak, maka user akan menyimpan data userId dan user role
             req.userId = decoded.UserInfo.userId
             req.role = decoded.UserInfo.role
             next()

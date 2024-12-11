@@ -8,7 +8,7 @@ import { useGetUserQuery } from '@/store/api/usersApiSlice'
 import { useHandleWishlistMutation } from '@/store/api/usersApiSlice'
 // components
 import { Button } from '@/components/ui/button'
-import CustomPage from '@/components/shared/HelmetPage'
+import HelmetPage from '@/components/shared/HelmetPage'
 import CartItem from '@/components/client/cart/CartItem'
 import CartSummary from '@/components/client/cart/CartSummary'
 import CheckoutSummary from '@/components/client/cart/CheckoutSummary'
@@ -16,8 +16,9 @@ import CheckoutSummary from '@/components/client/cart/CheckoutSummary'
 const Cart = () => {
     const navigate = useNavigate()
     const cart = useSelector(getCart)
-    const [skip, setSkip] = useState(true)
     const dataDecoded = useDecodeToken()
+    const [skip, setSkip] = useState(true)
+
     const [addWishlist] = useHandleWishlistMutation()
     const role = dataDecoded?.UserInfo.role as string
     const userId = dataDecoded?.UserInfo.userId as string
@@ -29,33 +30,32 @@ const Cart = () => {
     const totalItems = cart.reduce((currVal, value) => {
         return currVal += value.count
     }, 0)
+    const inWishlist = (productId: string) => {
+        return isSuccess && userData.data.wishlist.find((product: ProductTypes) => product._id === productId) 
+    }
 
     const handleAddWishlist = async (productId: string) => {
         try {
             const response = await addWishlist({userId, productId, method: 'add'}).unwrap()
-            if(response.error) {
-                throw response.error
-            } else {
-                toast.success(response.message)
-            }
+            toast.success(response.message)
         } catch (error: any) {
             toast.error(error.data.message)
         }
     }
 
     useEffect(() => {
-        if(userId) {
+        if(dataDecoded) {
             setSkip(false)
         }
-    }, [userId])
-
-    const isWishlist = (productId: string) => {
-        return isSuccess && userData.data.wishlist.find((product: ProductTypes) => product._id === productId) 
-    }
+    }, [dataDecoded])
+    
+    useEffect(() => {
+        scrollTo(0, 0)
+    }, [])
 
     return (
         <Fragment>
-            <CustomPage title='TOHEN | Cart' content='Cart page'/>
+            <HelmetPage title='TOHEN | Cart' content='Cart page'/>
             <section className='md:container px-5 text-[#333] dark:text-gray-200'>
                 <h1 className='text-2xl font-semibold mb-2'>Cart</h1>
                 {cart.length > 0 && <p>Total items: {cart.length} item</p>}
@@ -64,13 +64,9 @@ const Cart = () => {
                         <div className="flex flex-col flex-1 md:flex-[0.65] lg:flex-[0.75] space-y-3">
                             <div className='h-max flex flex-col space-y-10 border border-gray-200 dark:border-gray-800 rounded-md shadow-sm p-7'>
                                 {cart.map(item => (
-                                    <CartItem 
-                                        key={item._id} 
-                                        item={item} 
-                                        isLoggedIn={userId}
-                                        isAdmin={role === 'admin'}
+                                    <CartItem key={item._id} item={item} isLoggedIn={userId} isAdmin={role === 'admin'}
                                         handleAddWishlist={() => handleAddWishlist(item._id)}
-                                        isWishlist={isWishlist(item._id)}    
+                                        inWishlist={inWishlist(item._id)}    
                                     />
                                 ))}
                             </div>
@@ -88,5 +84,4 @@ const Cart = () => {
         </Fragment>
     )
 }
-
 export default Cart

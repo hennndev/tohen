@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import AccountDeleteForm from '../client/forms/AccountDeleteForm'
+// component
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 
 type PropsTypes = { 
@@ -23,5 +24,4 @@ const ModalDeleteAccount = ({username, children}: PropsTypes) => {
         </AlertDialog>
     )
 }
-
 export default ModalDeleteAccount
