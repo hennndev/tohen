@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import { Fragment, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import HelmetPage from '@/components/shared/HelmetPage'
@@ -6,8 +6,8 @@ import BoxInfo from '@/components/admin/dashboard/BoxInfo'
 import { Button } from '@/components/ui/button'
 import OrdersAnalytics from '@/components/admin/charts/OrdersAnalytics'
 import { handleShowSearchInput } from '@/store/features/searchInputSlice'
-import { useGetProductsQuery } from '@/store/api/productsApiSlice'
-import { useGetUsersQuery } from '@/store/api/usersApiSlice'
+// import { useGetProductsQuery } from '@/store/api/productsApiSlice'
+// import { useGetUsersQuery } from '@/store/api/usersApiSlice'
 
 const Dashboard = () => {
     const dispatch = useDispatch()

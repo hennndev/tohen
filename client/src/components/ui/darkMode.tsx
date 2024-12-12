@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import useTheme from '@/hooks/useTheme';
 import { DarkModeSwitch } from 'react-toggle-dark-mode'
 

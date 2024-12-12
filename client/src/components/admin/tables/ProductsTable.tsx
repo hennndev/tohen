@@ -1,7 +1,6 @@
 import { useState, Fragment } from 'react'
 import toast from 'react-hot-toast'
 import queryString from 'query-string'
-import { rupiahFormat } from '@/utils/utils'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useDeleteProductMutation } from '@/store/api/productsApiSlice'
 // components

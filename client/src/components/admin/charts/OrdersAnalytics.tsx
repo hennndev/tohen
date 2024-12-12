@@ -1,5 +1,4 @@
-import React from 'react'
-import { LineChart, Legend, CartesianGrid, XAxis, Tooltip, Line, YAxis, ResponsiveContainer, Text } from 'recharts'
+import { LineChart, Legend, CartesianGrid, XAxis, Tooltip, Line, YAxis, ResponsiveContainer } from 'recharts'
 
 const data = [
     {

@@ -57,8 +57,8 @@ const ProductDetail = () => {
     }, [dataDecoded])
     
     useEffect(() => {
-        scrollTo(0,0)
-    }, [])
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, [location.search])
 
     if(isLoading) {
         return (
@@ -67,7 +67,9 @@ const ProductDetail = () => {
             </section>
         )
     }
-    if(isError) return <Navigate to='/page-not-found' replace={true}/>
+    if(isError) {
+        return <Navigate to='/page-not-found' replace={true}/>
+    }
     
     return (
         <Fragment>

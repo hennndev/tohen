@@ -1,7 +1,7 @@
 import { useState, useEffect, Fragment } from 'react'
-import queryString from 'query-string'
+// import queryString from 'query-string'
 import { useDispatch } from 'react-redux'
-import { handleQueries } from '@/utils/utils'
+// import { handleQueries } from '@/utils/utils'
 import { useLocation } from 'react-router-dom'
 import { useGetUsersQuery } from '@/store/api/usersApiSlice'
 import { handleShowSearchInput } from '@/store/features/searchInputSlice'
@@ -14,10 +14,10 @@ import ProductsHeader from '@/components/admin/headers/ProductsHeader'
 const Users = () => {
     const location = useLocation()
     const dispatch = useDispatch()
-    const queryStr = queryString.parse(location.search)
+    // const queryStr = queryString.parse(location.search)
     const [users, setUsers] = useState([])
     // const { setSearchParams, newQueryParameters, handleSetQueries } = useQueryParams()
-    const queries = handleQueries(queryStr)
+    // const queries = handleQueries(queryStr)
     const { data, isLoading } = useGetUsersQuery(1)
 
     useEffect(() => {

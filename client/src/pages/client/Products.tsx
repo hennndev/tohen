@@ -39,7 +39,7 @@ const ProductsPage = () => {
         <Fragment>
             <HelmetPage title='TOHEN | Products' content='Page contains about products list and other details information'/>
             <section className='flex px-5 md:container lg:space-x-5'>
-                <section className={`fixed lg:static w-[320px] lg:w-auto h-full lg:h-auto overflow-y-auto px-5 py-8 lg:py-0 bg-background top-0 ${openFilter ? 'left-0' : '-left-[100%]'} duration-300 ease-linear lg:transition-none !z-[50] lg:z-auto lg:flex-[0.25] xl:flex-[0.2] shadow-lg lg:shadow-none`}>
+                <section className={`fixed lg:static w-[320px] lg:w-auto h-full lg:h-auto overflow-y-auto px-5 py-8 lg:py-0 bg-background top-0 ${openFilter ? 'left-0' : '-left-[100%]'} duration-300 ease-linear lg:transition-none z-[45] lg:z-[70] lg:flex-[0.25] xl:flex-[0.2] shadow-lg lg:shadow-none`}>
                     <LuX className='absolute lg:hidden w-5 h-5 top-3 right-3 cursor-pointer' onClick={() => setOpenFilter(false)}/>
                     <FilterProducts setOpenFilter={setOpenFilter}/>
                 </section>  

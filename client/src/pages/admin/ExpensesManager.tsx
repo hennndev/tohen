@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 import HelmetPage from '@/components/shared/HelmetPage'
 
 const ExpensesManager = () => {

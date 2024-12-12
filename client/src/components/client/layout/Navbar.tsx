@@ -51,12 +51,14 @@ const Navbar = () => {
     }, [currentUser, skip])
 
     return (
-        <header className='sticky top-0 bg-background pt-5 pb-3 z-40 lg:z-[55] w-full'>
+        <header className='sticky top-0 bg-background pt-5 pb-3 z-40 lg:z-[90] w-full'>
             <section className='flex-between md:container px-5 text-[#333] dark:text-gray-200'>
-                <h1 className='flexx text-2xl font-bold'>
-                    <SiCoinmarketcap className='mr-2'/>
-                    TOHEN.
-                </h1>
+                <Link to="/products">
+                    <h1 className='flexx text-2xl font-bold'>
+                        <SiCoinmarketcap className='mr-2'/>
+                        TOHEN.
+                    </h1>
+                </Link>
                 <section className='hidden md:flexx space-x-5'>
                     <Link to="/products" className='hover:underline'>Products</Link>
                     {currentToken && userRole === 'customer' && <Link to="/orders-history" className='hover:underline'>Orders</Link>}
@@ -91,7 +93,7 @@ const Navbar = () => {
             </section>
 
             {/* MOBILE */}
-            <section className={`fixed bg-background flex flex-col w-full h-screen top-0 ${!open ? '!-right-[100%] md:hidden' : 'right-0 md:hidden'} duration-300 ease-linear !z-[100] px-10 py-5`}>
+            <section className={`fixed bg-background flex flex-col w-full h-screen top-0 ${!open ? '!-right-[100%] md:hidden' : 'right-0 md:hidden'} duration-300 ease-linear z-[100] px-10 py-5`}>
                 <section className='flex-between'>
                     <h1 className='flexx text-2xl font-bold text-[#222] dark:text-gray-100'>
                         <SiCoinmarketcap className='mr-2'/>

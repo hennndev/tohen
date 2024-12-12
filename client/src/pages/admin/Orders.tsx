@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import HelmetPage from '@/components/shared/HelmetPage'
 
 const Orders = () => {

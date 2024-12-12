@@ -1,4 +1,3 @@
-import React from 'react'
 import { TrendingUp, TrendingDown, UsersRound, ShoppingBag, ChevronsUp } from 'lucide-react'
 import { rupiahFormat } from '@/utils/utils'
 

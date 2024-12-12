@@ -1,18 +1,18 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import useDecodeToken from '@/hooks/useDecodeToken'
 import { useGetOrdersHistoryQuery } from '@/store/api/usersApiSlice'
 // components
 import CustomPage from '@/components/shared/HelmetPage'
 import PageLoader from '@/components/shared/PageLoader'
-import OrdersHistory from '@/components/client/ordersHistory/OrdersHistory'
+// import OrdersHistory from '@/components/client/ordersHistory/OrdersHistory'
 
 const OrdersHistoryPage = () => {
 
     const dataDecoded = useDecodeToken()
-    const [openFilter, setOpenFilter] = useState<boolean>(false)
+    const [openFilter] = useState<boolean>(false)
 
     const userId = dataDecoded?.UserInfo?.userId as string
-    const { data: ordersData, isLoading } = useGetOrdersHistoryQuery(userId)
+    const { isLoading } = useGetOrdersHistoryQuery(userId)
 
     return (
         <Fragment>

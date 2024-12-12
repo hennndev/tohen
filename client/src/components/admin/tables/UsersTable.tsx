@@ -1,28 +1,13 @@
-import { useState, Fragment } from 'react'
-import toast from 'react-hot-toast'
-import queryString from 'query-string'
-import { rupiahFormat } from '@/utils/utils'
-import { Pencil, Trash2 } from 'lucide-react'
+import { Fragment } from 'react'
 import { Button } from '@/components/ui/button'
-import { useNavigate, useLocation } from 'react-router-dom'
-import ModalConfirm from '@/components/modals/ModalConfirm'
 import ModalDescription from '@/components/modals/ModalDescription'
-import { useDeleteProductMutation } from '@/store/api/productsApiSlice'
-import { useGetUsersQuery } from '@/store/api/usersApiSlice'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 type PropsTypes = {
     users: any[]
 }
-const DATA_LIMIT = 10
 
 const UsersTable = ({users}: PropsTypes) => {
-    const navigate = useNavigate()
-    const location = useLocation()
-    const queryStr = queryString.parse(location.search)
-
-    
-
     return (
         <Fragment>
             <Table>

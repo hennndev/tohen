@@ -12,3 +12,5 @@ dist
 dist-ssr
 *.local
 
+.env*
+
