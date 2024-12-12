@@ -3,6 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const corsOptions = require('./config/corsOptions')
+const path = require('path')
 const app = express()
 require('dotenv').config()
 // routes
