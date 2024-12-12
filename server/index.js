@@ -17,7 +17,7 @@ app.use(cors(corsOptions))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'client/dist')))
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
 })
 mongoose.set('strictQuery', 'false')
 mongoose.connect(process.env.MONGODB_URI)
